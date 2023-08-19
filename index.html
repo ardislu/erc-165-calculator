@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <title>ERC-165 Calculator</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+      background: hsl(216deg 50% 90%);
+      color: hsl(216deg 50% 10%);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>ERC-165 Calculator</h1>
+
+  <form>
+    <label for="functions">Functions</label>
+    <textarea name="functions" id="functions"></textarea>
+
+    <button>Calculate</button>
+
+    <output></output>
+  </form>
+
+  <script type="module">
+    // From noble-hashes v1.3.1
+    import { keccak256 } from '/keccak256.js';
+
+    document.querySelector('form').addEventListener('submit', e => {
+      e.preventDefault();
+      const functions = new FormData(e.target).get('functions');
+      const hashes = [];
+      for (const fn of functions.split('\n')) {
+        const functionRegex = /^(function )?(?<name>[a-zA-Z$_][a-zA-Z0-9$_]*)\((?<parameters>.*?)\)/;
+        const { name, parameters } = functionRegex.exec(fn).groups;
+        const parametersTypes = parameters.split(',').map(param => param.trim().split(' ')[0]).join(',');
+        const normalizedName = `${name}(${parametersTypes})`;
+        const byteArray = keccak256(new TextEncoder().encode(normalizedName)).slice(0, 4);
+        hashes.push(byteArray);
+      }
+
+      const xor = Uint8Array.from([0, 0, 0, 0]);
+      for (const hash of hashes) {
+        for (const [index, byte] of hash.entries()) {
+          xor[index] ^= byte;
+        }
+      }
+
+      const xorHash = `0x${[...xor].map(b => b.toString(16).padStart(2, '0')).join('')}`;
+      console.log(xorHash);
+    });
+  </script>
+</body>
+
+</html>
