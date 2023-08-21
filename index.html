@@ -52,6 +52,10 @@
     button {
       padding: 4px 8px;
     }
+
+    output:empty::after {
+      content: '—';
+    }
   </style>
 </head>
 
@@ -67,7 +71,8 @@
 
       <button>Calculate</button>
 
-      <output></output>
+      <label for="output">Interface ID</label>
+      <output name="output" id="output"></output>
     </form>
   </main>
 
@@ -96,7 +101,7 @@
       }
 
       const xorHash = `0x${[...xor].map(b => b.toString(16).padStart(2, '0')).join('')}`;
-      console.log(xorHash);
+      e.target.elements['output'].textContent = xorHash;
     });
   </script>
 </body>
