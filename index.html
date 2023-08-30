@@ -92,10 +92,43 @@
       e.preventDefault();
       const functions = new FormData(e.target).get('functions');
       const hashes = [];
-      for (const fn of functions.split('\n')) {
+      for (let line of functions.split('\n')) {
+        // Ignore comment lines
+        line = line.trim();
+        if (line.substring(0, 2) === '//') {
+          continue;
+        }
+
+        // Delete everything that doesn't directly affect function signatures
+        line = line.replaceAll(/[^a-zA-Z0-9$_()[\],\s]/g, '');
+        if (line === '') {
+          continue;
+        }
+
+        // Parse out function name and parameter types
         const functionRegex = /^(function )?(?<name>[a-zA-Z$_][a-zA-Z0-9$_]*)\((?<parameters>.*?)\)/;
-        const { name, parameters } = functionRegex.exec(fn).groups;
-        const parametersTypes = parameters.split(',').map(param => param.trim().split(' ')[0]).join(',');
+        const { name, parameters } = functionRegex.exec(line)?.groups ?? { name: undefined, parameters: undefined };
+        if (name === undefined) {
+          continue;
+        }
+
+        // Convert types from Solidity to ABI (e.g., 'uint' --> 'uint256')
+        // Reference: https://docs.soliditylang.org/en/latest/abi-spec.html#types
+        const parametersArray = parameters.split(',').map(param => param.trim().split(' ')[0]);
+        for (const [index, param] of parametersArray.entries()) {
+          switch (param) {
+            case 'int': parametersArray[index] = 'int256'; break;
+            case 'uint': parametersArray[index] = 'uint256'; break;
+            case 'fixed': parametersArray[index] = 'fixed128x18'; break;
+            case 'ufixed': parametersArray[index] = 'ufixed128x18'; break;
+            case 'contract': parametersArray[index] = 'address'; break;
+            case 'enum': parametersArray[index] = 'uint8'; break;
+            case 'struct': parametersArray[index] = 'tuple'; break;
+          }
+        }
+        const parametersTypes = parametersArray.join(',');
+
+        // The final normalized function name to hash
         const normalizedName = `${name}(${parametersTypes})`;
         const byteArray = keccak256(new TextEncoder().encode(normalizedName)).slice(0, 4);
         hashes.push(byteArray);
