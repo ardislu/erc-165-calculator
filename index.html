@@ -51,6 +51,14 @@
 
     button {
       padding: 4px 8px;
+      cursor: pointer;
+      transition: filter 400ms;
+    }
+
+    button:hover,
+    button:focus {
+      filter: brightness(110%);
+      transition: filter 200ms;
     }
 
     output:empty::after {
@@ -67,7 +75,7 @@
   <main>
     <form>
       <label for="functions">Functions</label>
-      <textarea name="functions" id="functions"></textarea>
+      <textarea name="functions" id="functions" required></textarea>
 
       <button>Calculate</button>
 
