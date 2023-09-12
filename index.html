@@ -25,6 +25,7 @@
     }
 
     form {
+      inline-size: 100%;
       display: flex;
       flex-direction: column;
       align-items: start;
@@ -44,8 +45,9 @@
     }
 
     textarea {
-      min-inline-size: 80ch;
-      min-block-size: 5rem;
+      box-sizing: border-box;
+      min-inline-size: min(80ch, 100%);
+      min-block-size: 7rem;
       padding: 8px;
     }
 
