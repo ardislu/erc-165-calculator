@@ -37,6 +37,7 @@
       font-size: 1.25rem;
     }
 
+    select,
     textarea,
     button {
       font-size: 1rem;
@@ -44,11 +45,21 @@
       border: 1px solid hsl(216deg 50% 50%);
     }
 
+    select {
+      padding: 4px;
+    }
+
     textarea {
       box-sizing: border-box;
       min-inline-size: min(80ch, 100%);
-      min-block-size: 7rem;
+      min-block-size: 12rem;
       padding: 8px;
+      text-wrap: nowrap;
+    }
+
+    textarea:read-only {
+      background: hsl(216deg 25% 95%);
+      cursor: not-allowed;
     }
 
     button {
@@ -66,6 +77,16 @@
     output:empty::after {
       content: '—';
     }
+
+    .visually-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
   </style>
 </head>
 
@@ -77,6 +98,15 @@
   <main>
     <form>
       <label for="functions">Functions</label>
+      <label for="presets" class="visually-hidden">Presets</label>
+      <select name="presets" id="presets">
+        <option value="Custom">Custom</option>
+        <option value="ERC-20">ERC-20</option>
+        <option value="ERC-20-Optional">ERC-20 (including optional)</option>
+        <option value="ERC-165">ERC-165</option>
+        <option value="ERC-721">ERC-721</option>
+        <option value="ERC-1155">ERC-1155</option>
+      </select>
       <textarea name="functions" id="functions" required></textarea>
 
       <button>Calculate</button>
@@ -89,6 +119,67 @@
   <script type="module">
     // From noble-hashes v1.3.2
     import { keccak256 } from '/keccak256.js';
+
+    let lastSelection = 'Custom';
+    let customFunctions = '';
+    document.querySelector('select').addEventListener('change', e => {
+      const selection = e.target.value;
+      const textarea = document.querySelector('textarea');
+
+      if (lastSelection === 'Custom') {
+        customFunctions = textarea.value;
+        textarea.readOnly = true;
+      }
+
+      lastSelection = selection;
+      switch (selection) {
+        case 'Custom':
+          textarea.value = customFunctions;
+          textarea.readOnly = false;
+          break;
+        case 'ERC-20':
+          textarea.value = `totalSupply()
+balanceOf(address)
+transfer(address,uint256)
+transferFrom(address,address,uint256)
+approve(address,uint256)
+allowance(address,address)`
+          break;
+        case 'ERC-165':
+          textarea.value = 'supportsInterface(bytes4 interfaceID)';
+          break;
+        case 'ERC-20-Optional':
+          textarea.value = `name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(address)
+transfer(address,uint256)
+transferFrom(address,address,uint256)
+approve(address,uint256)
+allowance(address,address)`
+          break;
+        case 'ERC-721':
+          textarea.value = `balanceOf(address)
+ownerOf(uint256)
+safeTransferFrom(address,address,uint256,bytes)
+safeTransferFrom(address,address,uint256)
+transferFrom(address,address,uint256)
+approve(address,uint256)
+setApprovalForAll(address,bool)
+getApproved(uint256)
+isApprovedForAll(address,address)`
+          break;
+        case 'ERC-1155':
+          textarea.value = `safeTransferFrom(address,address,uint256,uint256,bytes)
+safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)
+balanceOf(address,uint256)
+balanceOfBatch(address[],uint256[])
+setApprovalForAll(address,bool)
+isApprovedForAll(address,address)`
+          break;
+      }
+    });
 
     document.querySelector('form').addEventListener('submit', e => {
       e.preventDefault();
