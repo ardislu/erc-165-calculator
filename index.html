@@ -111,6 +111,8 @@
         <option value="ERC-165">ERC-165</option>
         <option value="ERC-721">ERC-721</option>
         <option value="ERC-1155">ERC-1155</option>
+        <option value="ERC-6551-Account">ERC-6551 Account</option>
+        <option value="ERC-6551-Executor">ERC-6551 Executor</option>
       </select>
       <textarea name="functions" id="functions" required></textarea>
 
@@ -182,6 +184,14 @@ balanceOf(address,uint256)
 balanceOfBatch(address[],uint256[])
 setApprovalForAll(address,bool)
 isApprovedForAll(address,address)`
+          break;
+        case 'ERC-6551-Account':
+          textarea.value = `token()
+state()
+isValidSigner(address,bytes)`
+          break;
+        case 'ERC-6551-Executor':
+          textarea.value = 'execute(address,uint256,bytes,uint256)';
           break;
       }
       document.querySelector('form').requestSubmit();
