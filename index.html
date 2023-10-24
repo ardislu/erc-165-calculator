@@ -50,6 +50,12 @@
       border: 1px solid hsl(216deg 50% 50%);
     }
 
+    button,
+    select {
+      cursor: pointer;
+      transition: filter 400ms;
+    }
+
     select {
       padding: 4px;
     }
@@ -69,12 +75,9 @@
 
     button {
       padding: 4px 8px;
-      cursor: pointer;
-      transition: filter 400ms;
     }
 
-    button:hover,
-    button:focus {
+    :is(button, select):is(:hover, :focus) {
       filter: brightness(110%);
       transition: filter 200ms;
     }
