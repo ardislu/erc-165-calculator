@@ -131,6 +131,7 @@
   <script type="module">
     // From noble-hashes v1.3.2
     import { keccak256 } from '/keccak256.js';
+    const interfaces = await fetch('/interfaces.json').then(r => r.json());
 
     let lastSelection = 'Custom';
     let customFunctions = '';
@@ -144,60 +145,12 @@
       }
 
       lastSelection = selection;
-      switch (selection) {
-        case 'Custom':
-          textarea.value = customFunctions;
-          textarea.readOnly = false;
-          break;
-        case 'ERC-20':
-          textarea.value = `totalSupply()
-balanceOf(address)
-transfer(address,uint256)
-transferFrom(address,address,uint256)
-approve(address,uint256)
-allowance(address,address)`
-          break;
-        case 'ERC-165':
-          textarea.value = 'supportsInterface(bytes4 interfaceID)';
-          break;
-        case 'ERC-20-Optional':
-          textarea.value = `name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(address)
-transfer(address,uint256)
-transferFrom(address,address,uint256)
-approve(address,uint256)
-allowance(address,address)`
-          break;
-        case 'ERC-721':
-          textarea.value = `balanceOf(address)
-ownerOf(uint256)
-safeTransferFrom(address,address,uint256,bytes)
-safeTransferFrom(address,address,uint256)
-transferFrom(address,address,uint256)
-approve(address,uint256)
-setApprovalForAll(address,bool)
-getApproved(uint256)
-isApprovedForAll(address,address)`
-          break;
-        case 'ERC-1155':
-          textarea.value = `safeTransferFrom(address,address,uint256,uint256,bytes)
-safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)
-balanceOf(address,uint256)
-balanceOfBatch(address[],uint256[])
-setApprovalForAll(address,bool)
-isApprovedForAll(address,address)`
-          break;
-        case 'ERC-6551-Account':
-          textarea.value = `token()
-state()
-isValidSigner(address,bytes)`
-          break;
-        case 'ERC-6551-Executor':
-          textarea.value = 'execute(address,uint256,bytes,uint256)';
-          break;
+      if (selection === 'Custom') {
+        textarea.value = customFunctions;
+        textarea.readOnly = false;
+      }
+      else {
+        textarea.value = interfaces[selection].join('\n');
       }
       document.querySelector('form').requestSubmit();
     });

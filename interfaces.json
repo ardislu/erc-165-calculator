@@ -1,0 +1,51 @@
+{
+  "ERC-20": [
+    "totalSupply()",
+    "balanceOf(address _owner)",
+    "transfer(address _to, uint256 _value)",
+    "transferFrom(address _from, address _to, uint256 _value)",
+    "approve(address _spender, uint256 _value)",
+    "allowance(address _owner, address _spender)"
+  ],
+  "ERC-20-Optional": [
+    "name()",
+    "symbol()",
+    "decimals()",
+    "totalSupply()",
+    "balanceOf(address _owner)",
+    "transfer(address _to, uint256 _value)",
+    "transferFrom(address _from, address _to, uint256 _value)",
+    "approve(address _spender, uint256 _value)",
+    "allowance(address _owner, address _spender)"
+  ],
+  "ERC-165": [
+    "supportsInterface(bytes4 interfaceID)"
+  ],
+  "ERC-721": [
+    "balanceOf(address _owner)",
+    "ownerOf(uint256 _tokenId)",
+    "safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data)",
+    "safeTransferFrom(address _from, address _to, uint256 _tokenId)",
+    "transferFrom(address _from, address _to, uint256 _tokenId)",
+    "approve(address _approved, uint256 _tokenId)",
+    "setApprovalForAll(address _operator, bool _approved)",
+    "getApproved(uint256 _tokenId)",
+    "isApprovedForAll(address _owner, address _operator)"
+  ],
+  "ERC-1155": [
+    "safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data)",
+    "safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data)",
+    "balanceOf(address _owner, uint256 _id)",
+    "balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids)",
+    "setApprovalForAll(address _operator, bool _approved)",
+    "isApprovedForAll(address _owner, address _operator)"
+  ],
+  "ERC-6551-Account": [
+    "token()",
+    "state()",
+    "isValidSigner(address signer, bytes calldata context)"
+  ],
+  "ERC-6551-Executor": [
+    "execute(address to, uint256 value, bytes calldata data, uint8 operation)"
+  ]
+}
