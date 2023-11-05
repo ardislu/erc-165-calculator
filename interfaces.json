@@ -40,6 +40,31 @@
     "setApprovalForAll(address _operator, bool _approved)",
     "isApprovedForAll(address _owner, address _operator)"
   ],
+  "ERC-1271": [
+    "isValidSignature(bytes32 _hash, bytes calldata _signature)"
+  ],
+  "ERC-1363": [
+    "transferAndCall(address to, uint256 value)",
+    "transferAndCall(address to, uint256 value, bytes memory data)",
+    "transferFromAndCall(address from, address to, uint256 value)",
+    "transferFromAndCall(address from, address to, uint256 value, bytes memory data)",
+    "approveAndCall(address spender, uint256 value)",
+    "approveAndCall(address spender, uint256 value, bytes memory data)"
+  ],
+  "ERC-1363-Receiver": [
+    "onTransferReceived(address operator, address from, uint256 value, bytes memory data)"
+  ],
+  "ERC-1363-Spender": [
+    "onApprovalReceived(address owner, uint256 value, bytes memory data)"
+  ],
+  "ERC-5805": [
+    "getVotes(address account)",
+    "getPastVotes(address account, uint256 timepoint)",
+    "delegates(address account)",
+    "nonces(address owner)",
+    "delegate(address delegatee)",
+    "delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)"
+  ],
   "ERC-6551-Account": [
     "token()",
     "state()",
