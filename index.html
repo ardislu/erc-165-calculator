@@ -20,7 +20,23 @@
 
     header {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    a {
+      font-weight: 700;
+      color: hsl(216deg 50% 50%);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
     }
 
     main {
@@ -103,6 +119,7 @@
 <body>
   <header>
     <h1>ERC-165 Calculator</h1>
+    <a href="https://github.com/ardislu/erc-165-calculator">GitHub</a>
   </header>
 
   <main>
