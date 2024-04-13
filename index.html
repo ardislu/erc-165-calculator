@@ -154,27 +154,29 @@
       select.insertAdjacentHTML('beforeend', `<option value="${i}">${i}</option>`);
     }
 
+    let lastSelection = 'Custom';
     let customFunctions = '';
     select.addEventListener('change', e => {
       const selection = e.target.value;
+
+      if (lastSelection === 'Custom') {
+        customFunctions = textarea.value;
+        textarea.readOnly = true;
+      }
+      lastSelection = selection;
 
       if (selection === 'Custom') {
         textarea.value = customFunctions;
         textarea.readOnly = false;
         form.requestSubmit();
       }
+      else if (typeof interfaces[selection] === 'string') {
+        textarea.value = 'No functions: the interface ID for this ERC is hardcoded.';
+        output.textContent = interfaces[selection];
+      }
       else {
-        customFunctions = textarea.value;
-        textarea.readOnly = true;
-
-        if (typeof interfaces[selection] === 'string') {
-          textarea.value = 'No functions: the interface ID for this ERC is hardcoded.';
-          output.textContent = interfaces[selection];
-        }
-        else {
-          textarea.value = interfaces[selection].join('\n');
-          form.requestSubmit();
-        }
+        textarea.value = interfaces[selection].join('\n');
+        form.requestSubmit();
       }
     });
 
