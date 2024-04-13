@@ -158,39 +158,40 @@
     import { keccak256 } from '/keccak256.js';
     const interfaces = await fetch('/interfaces.json').then(r => r.json());
 
-    let lastSelection = 'Custom';
+    const form = document.querySelector('form');
+    const select = document.querySelector('select');
+    const textarea = document.querySelector('textarea');
+    const output = document.querySelector('output');
+
     let customFunctions = '';
-    document.querySelector('select').addEventListener('change', e => {
+    select.addEventListener('change', e => {
       const selection = e.target.value;
-      const textarea = document.querySelector('textarea');
-      const output = document.querySelector('output');
 
-      if (lastSelection === 'Custom') {
-        customFunctions = textarea.value;
-        textarea.readOnly = true;
-      }
-
-      lastSelection = selection;
       if (selection === 'Custom') {
         textarea.value = customFunctions;
         textarea.readOnly = false;
-        document.querySelector('form').requestSubmit();
-      }
-      else if (typeof interfaces[selection] === 'string') {
-        textarea.value = 'No functions: the interface ID for this ERC is hardcoded.';
-        output.textContent = interfaces[selection];
+        form.requestSubmit();
       }
       else {
-        textarea.value = interfaces[selection].join('\n');
-        document.querySelector('form').requestSubmit();
+        customFunctions = textarea.value;
+        textarea.readOnly = true;
+
+        if (typeof interfaces[selection] === 'string') {
+          textarea.value = 'No functions: the interface ID for this ERC is hardcoded.';
+          output.textContent = interfaces[selection];
+        }
+        else {
+          textarea.value = interfaces[selection].join('\n');
+          form.requestSubmit();
+        }
       }
     });
 
-    document.querySelector('form').addEventListener('submit', e => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
-      const functions = new FormData(e.target).get('functions');
+
       const hashes = [];
-      for (let line of functions.split('\n')) {
+      for (let line of textarea.value.split('\n')) {
         // Ignore comment lines
         line = line.trim();
         if (line.substring(0, 2) === '//') {
@@ -251,7 +252,7 @@
       }
 
       const xorHash = `0x${[...xor].map(b => b.toString(16).padStart(2, '0')).join('')}`;
-      e.target.elements['output'].textContent = xorHash;
+      output.textContent = xorHash;
     });
   </script>
 </body>
