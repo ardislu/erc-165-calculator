@@ -57,6 +57,7 @@
   "ERC-1363-Spender": [
     "onApprovalReceived(address owner, uint256 value, bytes memory data)"
   ],
+  "ERC-4906": "0x49064906",
   "ERC-5805": [
     "getVotes(address account)",
     "getPastVotes(address account, uint256 timepoint)",

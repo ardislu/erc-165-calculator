@@ -137,6 +137,7 @@
         <option value="ERC-1363">ERC-1363</option>
         <option value="ERC-1363-Receiver">ERC-1363 Receiver</option>
         <option value="ERC-1363-Spender">ERC-1363 Spender</option>
+        <option value="ERC-4906">ERC-4906</option>
         <option value="ERC-5805">ERC-5805</option>
         <option value="ERC-6551-Account">ERC-6551 Account</option>
         <option value="ERC-6551-Executor">ERC-6551 Executor</option>
@@ -160,6 +161,7 @@
     document.querySelector('select').addEventListener('change', e => {
       const selection = e.target.value;
       const textarea = document.querySelector('textarea');
+      const output = document.querySelector('output');
 
       if (lastSelection === 'Custom') {
         customFunctions = textarea.value;
@@ -170,11 +172,16 @@
       if (selection === 'Custom') {
         textarea.value = customFunctions;
         textarea.readOnly = false;
+        document.querySelector('form').requestSubmit();
+      }
+      else if (typeof interfaces[selection] === 'string') {
+        textarea.value = 'No functions: the interface ID for this ERC is hardcoded.';
+        output.textContent = interfaces[selection];
       }
       else {
         textarea.value = interfaces[selection].join('\n');
+        document.querySelector('form').requestSubmit();
       }
-      document.querySelector('form').requestSubmit();
     });
 
     document.querySelector('form').addEventListener('submit', e => {
