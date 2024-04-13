@@ -7,7 +7,7 @@
     "approve(address _spender, uint256 _value)",
     "allowance(address _owner, address _spender)"
   ],
-  "ERC-20-Optional": [
+  "ERC-20 (including optional)": [
     "name()",
     "symbol()",
     "decimals()",
@@ -51,10 +51,10 @@
     "approveAndCall(address spender, uint256 value)",
     "approveAndCall(address spender, uint256 value, bytes memory data)"
   ],
-  "ERC-1363-Receiver": [
+  "ERC-1363 Receiver": [
     "onTransferReceived(address operator, address from, uint256 value, bytes memory data)"
   ],
-  "ERC-1363-Spender": [
+  "ERC-1363 Spender": [
     "onApprovalReceived(address owner, uint256 value, bytes memory data)"
   ],
   "ERC-4906": "0x49064906",
@@ -66,12 +66,12 @@
     "delegate(address delegatee)",
     "delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)"
   ],
-  "ERC-6551-Account": [
+  "ERC-6551 Account": [
     "token()",
     "state()",
     "isValidSigner(address signer, bytes calldata context)"
   ],
-  "ERC-6551-Executor": [
+  "ERC-6551 Executor": [
     "execute(address to, uint256 value, bytes calldata data, uint8 operation)"
   ]
 }

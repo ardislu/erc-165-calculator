@@ -130,19 +130,6 @@
       <label for="presets" class="visually-hidden">Presets</label>
       <select name="presets" id="presets">
         <option value="Custom">Custom</option>
-        <option value="ERC-20">ERC-20</option>
-        <option value="ERC-20-Optional">ERC-20 (including optional)</option>
-        <option value="ERC-165">ERC-165</option>
-        <option value="ERC-721">ERC-721</option>
-        <option value="ERC-1155">ERC-1155</option>
-        <option value="ERC-1271">ERC-1271</option>
-        <option value="ERC-1363">ERC-1363</option>
-        <option value="ERC-1363-Receiver">ERC-1363 Receiver</option>
-        <option value="ERC-1363-Spender">ERC-1363 Spender</option>
-        <option value="ERC-4906">ERC-4906</option>
-        <option value="ERC-5805">ERC-5805</option>
-        <option value="ERC-6551-Account">ERC-6551 Account</option>
-        <option value="ERC-6551-Executor">ERC-6551 Executor</option>
       </select>
       <textarea name="functions" id="functions" required></textarea>
 
@@ -162,6 +149,10 @@
     const select = document.querySelector('select');
     const textarea = document.querySelector('textarea');
     const output = document.querySelector('output');
+
+    for (const i of Object.keys(interfaces)) {
+      select.insertAdjacentHTML('beforeend', `<option value="${i}">${i}</option>`);
+    }
 
     let customFunctions = '';
     select.addEventListener('change', e => {
