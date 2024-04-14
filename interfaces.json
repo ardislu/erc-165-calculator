@@ -32,6 +32,19 @@
     "getApproved(uint256 _tokenId)",
     "isApprovedForAll(address _owner, address _operator)"
   ],
+  "ERC-721 Metadata": [
+    "name()",
+    "symbol()",
+    "tokenURI(uint256 _tokenId)"
+  ],
+  "ERC-721 Token Receiver": [
+    "onERC721Received(address _operator, address _from, uint256 _tokenId, bytes _data)"
+  ],
+  "ERC-721 Enumerable": [
+    "totalSupply()",
+    "tokenByIndex(uint256 _index)",
+    "tokenOfOwnerByIndex(address _owner, uint256 _index)"
+  ],
   "ERC-1155": [
     "safeTransferFrom(address _from, address _to, uint256 _id, uint256 _value, bytes calldata _data)",
     "safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data)",
@@ -39,6 +52,13 @@
     "balanceOfBatch(address[] calldata _owners, uint256[] calldata _ids)",
     "setApprovalForAll(address _operator, bool _approved)",
     "isApprovedForAll(address _owner, address _operator)"
+  ],
+  "ERC-1155 Metadata": [
+    "uri(uint256 _id)"
+  ],
+  "ERC-1155 Token Receiver": [
+    "onERC1155Received(address _operator, address _from, uint256 _id, uint256 _value, bytes calldata _data)",
+    "onERC1155BatchReceived(address _operator, address _from, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data)"
   ],
   "ERC-1271": [
     "isValidSignature(bytes32 _hash, bytes calldata _signature)"
