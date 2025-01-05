@@ -100,5 +100,8 @@
     "grantRole(bytes32 role, address account) external",
     "revokeRole(bytes32 role, address account) external",
     "renounceRole(bytes32 role, address callerConfirmation) external"
+  ],
+  "ENSIP-10 ExtendedResolver": [
+    "resolve(bytes calldata name, bytes calldata data) external view returns (bytes)"
   ]
 }
