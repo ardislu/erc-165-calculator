@@ -94,6 +94,15 @@
   "ERC-6551 Executor": [
     "execute(address to, uint256 value, bytes calldata data, uint8 operation)"
   ],
+  "ERC-6909": [
+    "balanceOf(address owner, uint256 id)",
+    "allowance(address owner, address spender, uint256 id)",
+    "isOperator(address owner, address spender)",
+    "transfer(address receiver, uint256 id, uint256 amount)",
+    "transferFrom(address sender, address receiver, uint256 id, uint256 amount)",
+    "approve(address spender, uint256 id, uint256 amount)",
+    "setOperator(address spender, bool approved)"
+  ],
   "OpenZeppelin (v5.0.0) AccessControl": [
     "hasRole(bytes32 role, address account) external view returns (bool)",
     "getRoleAdmin(bytes32 role) external view returns (bytes32)",
